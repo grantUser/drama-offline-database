@@ -2,6 +2,9 @@
 
 This project contains a Python script that updates a drama database using the MyDramaList API.
 
+Similar project in the anime field:
+https://github.com/manami-project/anime-offline-database
+
 ## Usage
 
 To use the script, follow these steps:
