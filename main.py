@@ -22,19 +22,44 @@ if currentStep := step.get_step():
 
                 tags = drama["tags"] + drama["genres"]
 
+                drama_dict = {}
 
-                drama_dict = {
-                    "sources": drama["sources"],
-                    "title": drama["title"],
-                    "type": drama["type"],
-                    "episodes": drama["episodes"],
-                    "status": drama["status"],
-                    "year": drama["year"],
-                    "picture": drama["images"]["poster"],
-                    "thumbnail": drama["images"]["thumb"],
-                    "synonyms": synonyms,
-                    "tags": tags
-                }
+                drama_dict["sources"] = []
+                if "sources" in drama:
+                    drama_dict["sources"] = drama["sources"]
+
+                drama_dict["title" = ""
+                if "title" in title:
+                    drama_dict["title"] = drama["title"]
+
+                drama_dict["type"] = ""
+                if "type" in drama:
+                    drama_dict["type"] = drama["type"]
+
+                drama_dict["episodes"] = ""
+                if "episodes" in drama:
+                    drama_dict["episodes"] = drama["episodes"]
+
+                drama_dict["status"] = ""
+                if "status" in drama:
+                    drama_dict["status"] = drama["status"]
+
+                drama_dict["year"] = ""
+                if "year" in drama:
+                    drama_dict["year"] = drama["year"]
+
+                drama_dict["picture"] = ""
+                if "images" in drama:
+                    if "poster" in dramadrama["images"]:
+                        drama_dict["picture"] = drama["images"]["poster"]
+                
+                drama_dict["thumbnail"] = ""
+                if "images" in drama:
+                    if "thumb" in dramadrama["images"]:
+                        drama_dict["thumbnail"] = drama["images"]["thumb"]
+                    
+                drama_dict["synonyms"] = synonyms
+                drama_dict["tags"] =  tags
 
                 database.append(drama_dict)
 
