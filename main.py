@@ -29,7 +29,7 @@ if currentStep := step.get_step():
                     drama_dict["sources"] = drama["sources"]
 
                 drama_dict["title"] = ""
-                if "title" in title:
+                if "title" in drama:
                     drama_dict["title"] = drama["title"]
 
                 drama_dict["type"] = ""
