@@ -50,12 +50,12 @@ if currentStep := step.get_step():
 
                 drama_dict["picture"] = ""
                 if "images" in drama:
-                    if "poster" in dramadrama["images"]:
+                    if "poster" in drama["images"]:
                         drama_dict["picture"] = drama["images"]["poster"]
                 
                 drama_dict["thumbnail"] = ""
                 if "images" in drama:
-                    if "thumb" in dramadrama["images"]:
+                    if "thumb" in drama["images"]:
                         drama_dict["thumbnail"] = drama["images"]["thumb"]
                     
                 drama_dict["synonyms"] = synonyms
