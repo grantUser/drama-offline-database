@@ -8,7 +8,7 @@ with open("drama-database.json", "r") as database_file:
 
 if currentStep := step.get_step():
     currentStep = int(currentStep) + 1
-    limit = currentStep + 200
+    limit = currentStep + 400
 
     characters = {}
     for number in range(currentStep, limit):
