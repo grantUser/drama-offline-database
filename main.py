@@ -24,6 +24,8 @@ if currentStep := step.get_step():
 
                 drama_dict = {}
 
+                drama_dict["id"] = drama["id"]
+
                 drama_dict["sources"] = []
                 if "sources" in drama:
                     drama_dict["sources"] = drama["sources"]
