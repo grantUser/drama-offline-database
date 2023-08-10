@@ -3,9 +3,9 @@ name: Database
 on:
   schedule: 
     - cron: "*/60 * * * *"
-  
   workflow_dispatch:
-  push: {branches: ["master", "main"]}
+  push:
+    branches: ["master", "main"]
 
 jobs:
   database:
@@ -28,7 +28,14 @@ jobs:
       - name: Obtaining dramas
         run: python main.py
 
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code || echo "Database has changed"
+          echo "::set-output name=database_changed::$(git diff --exit-code)"
+
       - name: Commit and push database
+        if: steps.git-check.outputs.database_changed == 'true'
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "<>"
