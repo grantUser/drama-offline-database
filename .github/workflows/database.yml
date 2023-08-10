@@ -31,11 +31,16 @@ jobs:
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code || echo "Database has changed"
-          echo "::set-output name=database_changed::$(git diff --exit-code)"
+          if git diff --quiet; then
+            echo "No database changes"
+            echo "database_changed=false" >> $GITHUB_ENV
+          else
+            echo "Database has changed"
+            echo "database_changed=true" >> $GITHUB_ENV
+          fi
 
       - name: Commit and push database
-        if: steps.git-check.outputs.database_changed == 'true'
+        if: env.database_changed == 'true'
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "<>"
