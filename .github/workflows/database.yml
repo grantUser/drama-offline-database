@@ -2,7 +2,7 @@ name: Database
 
 on:
   schedule: 
-    - cron: "*/60 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
   push:
     branches: ["master", "main"]
