@@ -42,6 +42,5 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "<>"
           git add drama-database.json
-          git add step.txt
           git commit -m "Update database"
           git push
