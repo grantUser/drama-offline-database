@@ -13,8 +13,9 @@ class DramaDatabase:
             return self._ids_cache
 
         self._ids_cache = [
-            entry.get("id") for entry in self.database if entry.get("id", False)
+            int(entry.get("id")) for entry in self.database if entry.get("id", False)
         ]
+
         return self._ids_cache
 
     @property
@@ -64,7 +65,7 @@ class DramaDatabase:
         Returns:
             bool: True if the drama ID is found, otherwise False.
         """
-        return id in self._ids_cache
+        return id in self.ids
 
     def add_drama(self, drama_info: dict) -> None:
         """
