@@ -52,8 +52,10 @@ class DramaDatabase:
         Note:
             This method should be called after making modifications to the database.
         """
+
+        sorted_database = sorted(self._database, key=lambda x: x["id"])
         with open(self._database_file, "w") as database_file:
-            json.dump(self._database, database_file, separators=(",", ":"))
+            json.dump(sorted_database, database_file, separators=(",", ":"))
 
     def contains_id(self, id: int) -> bool:
         """
