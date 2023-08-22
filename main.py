@@ -72,6 +72,8 @@ class DramaManager:
         self.fetch_and_add_new_dramas()
         self.fetch_and_update_dramas()
 
+        mydramalist.database.clean()
+
 if __name__ == "__main__":
     manager = DramaManager()
     manager.run()

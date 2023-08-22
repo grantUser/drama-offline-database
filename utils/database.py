@@ -26,7 +26,24 @@ class DramaDatabase:
         if not self._database:
             with open(self._database_file, "r") as database_file:
                 self._database = json.load(database_file)
+
         return self._database
+    
+    def clean(self) -> None:
+        """
+        Clean the drama entries in the database by removing unauthorized keys.
+
+        This method iterates through each drama entry in the database and removes
+        any keys that are not present in the list of allowed keys.
+        """
+        allowed_keys = ["id", "sources", "title", "type", "episodes", "status", "year", "picture", "thumbnail", "synonyms", "tags"]
+        for dictionary in self._database:
+            keys_to_remove = [key for key in dictionary if key not in allowed_keys]
+            
+            for key in keys_to_remove:
+                dictionary.pop(key)
+
+        self.save()
 
     def update(self, drama_id: int, new_data: dict) -> None:
         """
@@ -38,7 +55,36 @@ class DramaDatabase:
         """
         for entry in self._database:
             if entry.get("id") == drama_id:
-                entry.update(new_data)
+                synonyms = new_data.get("alt_titles", [])
+
+                if new_data.get("original_title", False):
+                    synonyms = synonyms + list(new_data.get("original_title", ""))
+
+                tags = []
+                if isinstance(new_data.get("tags"), list):
+                    tags = new_data.get("tags", [])
+
+                genres = []
+                if isinstance(new_data.get("genres"), list):
+                    genres = new_data.get("genres", [])
+
+                tags = list(tags) + list(genres)
+        
+                updated_data = {
+                    "id": new_data.get("id", ""),
+                    "sources": new_data.get("sources", []),
+                    "title": new_data.get("title", ""),
+                    "type": new_data.get("type", ""),
+                    "episodes": new_data.get("episodes", ""),
+                    "status": new_data.get("status", ""),
+                    "year": new_data.get("year", ""),
+                    "picture": new_data.get("images", {}).get("poster", ""),
+                    "thumbnail": new_data.get("images", {}).get("thumb", ""),
+                    "synonyms": synonyms,
+                    "tags": tags,
+                }
+
+                entry.update(updated_data)
                 self.save()
                 break
 
@@ -52,7 +98,6 @@ class DramaDatabase:
         Note:
             This method should be called after making modifications to the database.
         """
-
         sorted_database = sorted(self._database, key=lambda x: x["id"])
         with open(self._database_file, "w") as database_file:
             json.dump(sorted_database, database_file, separators=(",", ":"))
