@@ -153,7 +153,7 @@ class DramaDatabase:
             synonyms = synonyms + list(drama_info.get("original_title", ""))
 
         tags = []
-        if isinstance(new_data.get("tags"), list):
+        if isinstance(drama_info.get("tags"), list):
             for tag in tags:
                 if isinstance(tag, dict):
                     if "name" in tag:
@@ -162,7 +162,7 @@ class DramaDatabase:
                     tags.append(tag)
 
         genres = []
-        if isinstance(new_data.get("genres"), list):
+        if isinstance(drama_info.get("genres"), list):
             for genre in genres:
                 if isinstance(genre, dict):
                     if "name" in genre:
