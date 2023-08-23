@@ -43,6 +43,19 @@ class DramaDatabase:
             for key in keys_to_remove:
                 dictionary.pop(key)
 
+            tags = dictionary.get("tags", [])
+            cleaned_tags = []
+
+            for tag in tags:
+                if isinstance(tag, dict):
+                    tag_name = tag.get("name")
+                    if tag_name:
+                        cleaned_tags.append(tag_name)
+                else:
+                    cleaned_tags.append(tag)
+
+            dictionary["tags"] = cleaned_tags
+
         self.save()
 
     def update(self, drama_id: int, new_data: dict) -> None:
@@ -62,11 +75,21 @@ class DramaDatabase:
 
                 tags = []
                 if isinstance(new_data.get("tags"), list):
-                    tags = new_data.get("tags", [])
+                    for tag in tags:
+                        if isinstance(tag, dict):
+                            if "name" in tag:
+                                tags.append(tag.get("name"))
+                        else:
+                            tags.append(tag)
 
                 genres = []
                 if isinstance(new_data.get("genres"), list):
-                    genres = new_data.get("genres", [])
+                    for genre in genres:
+                        if isinstance(genre, dict):
+                            if "name" in genre:
+                                genres.append(genre.get("name"))
+                        else:
+                            genres.append(genre)
 
                 tags = list(tags) + list(genres)
         
@@ -130,12 +153,22 @@ class DramaDatabase:
             synonyms = synonyms + list(drama_info.get("original_title", ""))
 
         tags = []
-        if isinstance(drama_info.get("tags"), list):
-            tags = drama_info.get("tags", [])
+        if isinstance(new_data.get("tags"), list):
+            for tag in tags:
+                if isinstance(tag, dict):
+                    if "name" in tag:
+                        tags.append(tag.get("name"))
+                else:
+                    tags.append(tag)
 
         genres = []
-        if isinstance(drama_info.get("genres"), list):
-            genres = drama_info.get("genres", [])
+        if isinstance(new_data.get("genres"), list):
+            for genre in genres:
+                if isinstance(genre, dict):
+                    if "name" in genre:
+                        genres.append(genre.get("name"))
+                else:
+                    genres.append(genre)
 
         tags = list(tags) + list(genres)
 
