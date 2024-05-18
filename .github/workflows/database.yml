@@ -1,46 +1,46 @@
-# name: Database
+name: Database
 
-# on:
-#   schedule: 
-#     - cron: "*/120 * * * *"
-#   workflow_dispatch:
-#   push:
-#     branches: ["master", "main"]
+on:
+  schedule: 
+    - cron: "*/120 * * * *"
+  workflow_dispatch:
+  push:
+    branches: ["master", "main"]
 
-# jobs:
-#   database:
-#     runs-on: ubuntu-latest
+jobs:
+  database:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-#       - name: Set up Python
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: "3.x"
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
         
-#       - name: Install dependencies
-#         run: |
-#           python -m pip install --upgrade pip
-#           pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-#       - name: Obtaining dramas
-#         run: python main.py
+      - name: Obtaining dramas
+        run: python main.py
 
-#       - name: Check for changes
-#         id: git-check
-#         run: |
-#           if ! git diff --quiet; then
-#             echo "Database has changed"
-#             echo "database_changed=true" >> $GITHUB_ENV
-#           fi
+      - name: Check for changes
+        id: git-check
+        run: |
+          if ! git diff --quiet; then
+            echo "Database has changed"
+            echo "database_changed=true" >> $GITHUB_ENV
+          fi
 
-#       - name: Commit and push database
-#         if: env.database_changed == 'true'
-#         run: |
-#           git config --global user.name "GitHub Actions"
-#           git config --global user.email "<>"
-#           git add drama-database.json
-#           git commit -m "Update database"
-#           git push
+      - name: Commit and push database
+        if: env.database_changed == 'true'
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "<>"
+          git add drama-database.json
+          git commit -m "Update database"
+          git push
